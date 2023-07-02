@@ -13,8 +13,6 @@ function parse_comment_line(line) {
 	const comment_text = match_content[1].trim();
 	const match_directive = comment_text.match(/^@([a-zA-Z0-9-_]+)\s+(.*)$/);
 	
-	// console.error(`DEBUG:parse_comment_line comment_text '${comment_text}'`, `match_directive`, match_directive);
-	
 	if(match_directive === null)
 		return { type: "text", text: comment_text.trim() };
 	
@@ -47,7 +45,6 @@ function find_block_comment(lines, i) {
 	let mode = "description";
 	for(let j = i+1; j < lines.length; j++) {
 		const comment_line = parse_comment_line(lines[j]);
-		// console.error(`DEBUG:find_block_comment lines[j]`, lines[j], `comment_line`, comment_line);
 		if(comment_line === null) {
 			const function_def = parse_function(lines[j]);
 			if(function_def === null) break;
@@ -91,22 +88,18 @@ function find_block_comment(lines, i) {
 function postprocess_directives(directives) {
 	for(const item of directives) {
 		const parts = item.text.split(/\t+/);
-		console.error(`DEBUG:postprocess parts`, parts);
 		switch (item.directive) {
 			case "param":
-				console.error(`DEBUG:postprocess PARAM`);
 				item.name = parts[0];
 				item.type = parts[1];
 				item.description = parts[2];
 				break;
 			case "return":
 			case "returns":
-				console.error(`DEBUG:postprocess RETURN/S`);
 				item.type = parts[0];
 				item.description = parts[1];
 				break;
 		}
-		console.error(item);
 	}
 	return directives;
 }
