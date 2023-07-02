@@ -18,10 +18,8 @@ function parse_comment_line(line) {
 
 function parse_function(line) {
 	const match = line.match(/^\s*(?:(?:local|return)\s+)?function\s+([a-zA-Z_][a-zA-Z0-9:_.]+)\s*\(([a-zA-Z0-9_.,\s]*)\)/);
-	console.error(`DEBUG:parse_function line '${line}' match`, match);
 	if(match === null) {
 		const match_anon = line.match(/^\s*(?:(?:local|return)\s*)?function\s*\(([a-zA-Z0-9_., ]*)\)/);
-		console.error(`DEBUG:parse_function line '${line}' match_anon`, match_anon);
 		if(match_anon == null) return null;
 		return {
 			type: "function",
@@ -40,14 +38,17 @@ function parse_function(line) {
 		instanced: false
 	};
 	
-	const match_namespace = result.function.match(/^([^.]+)\..*$/);
-	if(match_namespace !== null)
+	const match_namespace = result.function.match(/^([^.]+)\.(.*)$/);
+	if(match_namespace !== null) {
 		result.namespace = match_namespace[1];
+		result.function = match_namespace[2];
+	}
 	
 	if (result.function.indexOf(`:`) > -1) {
 		result.instanced = true;
 		result.function = result.function.match(/:(.*)/)[1];
 	}
+	
 	
 	return result;
 }
@@ -171,6 +172,7 @@ function postprocess_directives(directives) {
 
 function make_fn_full_name(namespace, name) {
 	if(namespace === null || namespace.length === 0) return name;
+	
 	return `${namespace}.${name}`;
 }
 
@@ -202,8 +204,7 @@ function parse_file(source) {
 				break;
 			
 			case "function":
-				result.name_full = make_fn_full_name(result.namespace, comment.name);
-				console.error(`DEBUG:file/line >> comment namespace`, result.namespace, `comment`, comment, `name_full`, result.name_full);
+				comment.name_full = make_fn_full_name(result.namespace, comment.name);
 				// No break on purpose
 			
 			default:
