@@ -1,12 +1,5 @@
 "use strict";
 
-function find_namespace(line) {
-	const match = line.match(/^\s*-{2,}\s*@namespace\s+(.*)$/);
-	if(match !== null)
-		return match[1];
-	return null;
-}
-
 function parse_comment_line(line) {
 	const match_content = line.match(/^\s*-{2,}\s*(.*)$/);
 	if(match_content === null) return null;
@@ -26,11 +19,18 @@ function parse_comment_line(line) {
 function parse_function(line) {
 	const match = line.match(/^\s*(?:local\s*)?function\s+([a-zA-Z_][a-zA-Z0-9_.]+)\s*\(([a-zA-Z0-9_., ]+)\)/);
 	if(match === null) return null;
-	return {
+	
+	const result = {
 		type: "function",
 		function: match[1],
-		args: match[2].split(/\s*,\s*/)
+		args: match[2].split(/\s*,\s*/),
+		namespace: null, // Default: whatever the current file-level namespace is
 	};
+	
+	const match_namespace = result.function.match(/^([^.]+)\..*$/);
+	if(match_namespace !== null)
+		result.namespace = match_namespace[1];
+	return result;
 }
 
 function find_block_comment(lines, i) {
@@ -85,10 +85,18 @@ function find_block_comment(lines, i) {
 					case "namespace":
 						mode = "namespace";
 						result.type = "namespace";
+						result.namespace = directive_new.text;
+						break;
+					
+					case "class":
+						mode = "class";
+						result.type = "class";
+						break;
 					
 					default:
 						if(mode == "description")
 							mode = "directives";
+						break;
 				}
 				
 				result.directives.push(directive_new);
@@ -132,17 +140,18 @@ function parse_file(source) {
 	for(const line of lines) {
 		i++;
 		if(i < skip_until) continue;
-
-		const namespace = find_namespace(line);
-		if(namespace) {
-			result.namespace = namespace;
-			continue;
-		}
 		
 		const comment = find_block_comment(lines, i);
 		if(comment === null) continue;
 		postprocess_directives(comment.directives);
 		result.blocks.push(comment);
+		
+		switch(comment.type) {
+			case "namespace":
+				result.namespace = comment.namespace;
+				break;
+		}
+		
 		skip_until = result.line_last + 1;
 	}
 	
