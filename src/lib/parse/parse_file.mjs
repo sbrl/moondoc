@@ -11,7 +11,7 @@ function parse_comment_line(line) {
 	const match_content = line.match(/^\s*-{2,}\s*(.*)$/);
 	if(match_content === null) return null;
 	const comment_text = match_content[1].trim();
-	const match_directive = comment_text.match(/^@([a-zA-Z0-9-_]+)\s+(.*)$/);
+	const match_directive = comment_text.match(/^@([a-zA-Z0-9-_]+)(?:\s+(.*))?$/);
 	
 	if(match_directive === null)
 		return { type: "text", text: comment_text.trim() };
@@ -19,7 +19,7 @@ function parse_comment_line(line) {
 	return {
 		type: "directive",
 		directive: match_directive[1],
-		text: match_directive[2].trim()
+		text: typeof match_directive[2] == "string" ? match_directive[2].trim() : ""
 	};
 }
 
@@ -37,6 +37,7 @@ function find_block_comment(lines, i) {
 	const match = lines[i].match(/^\s*-{3,}\s*(.*)$/);
 	if(match === null) return null;
 	const result = {
+		type: "function",
 		description: match[1],
 		directives: [],
 		line: i
@@ -45,6 +46,8 @@ function find_block_comment(lines, i) {
 	let mode = "description";
 	for(let j = i+1; j < lines.length; j++) {
 		const comment_line = parse_comment_line(lines[j]);
+		// console.error(`DEBUG:comment line '${lines[j]}' comment_line`, comment_line);
+		
 		if(comment_line === null) {
 			const function_def = parse_function(lines[j]);
 			if(function_def === null) break;
@@ -68,14 +71,27 @@ function find_block_comment(lines, i) {
 				last_directive.text += `\n${comment_line.text}`;
 				break;
 			case "directive":
-				result.directives.push({
+				const directive_new = {
 					directive: comment_line.directive,
 					text: comment_line.text
-				});
-				if(result.directives.at(-1).directive == "event")
-					mode = "event";
-				else if(mode == "description")
-					mode = "directives";
+				};
+				
+				switch(directive_new.directive) {
+					case "event":
+						mode = "event";
+						result.type = "event";
+						break;
+					
+					case "namespace":
+						mode = "namespace";
+						result.type = "namespace";
+					
+					default:
+						if(mode == "description")
+							mode = "directives";
+				}
+				
+				result.directives.push(directive_new);
 				break;
 		}
 	}
@@ -87,6 +103,7 @@ function find_block_comment(lines, i) {
 
 function postprocess_directives(directives) {
 	for(const item of directives) {
+		item.text = item.text.trim();
 		const parts = item.text.split(/\t+/);
 		switch (item.directive) {
 			case "param":
