@@ -38,6 +38,7 @@ function find_block_comment(lines, i) {
 	if(match === null) return null;
 	const result = {
 		type: "function",
+		internal: false,
 		description: match[1],
 		directives: [],
 		line: i
@@ -50,13 +51,10 @@ function find_block_comment(lines, i) {
 		
 		if(comment_line === null) {
 			const function_def = parse_function(lines[j]);
-			if(function_def === null) break;
-			result.function = {
-				function: function_def.function,
-				args: function_def.args,
-				line: result.last_line_parsed
-			};
 			result.line_last = j;
+			if(function_def === null) break;
+			result.name = function_def.function;
+			result.args = function_def.args;
 			break;
 		}
 		
@@ -91,7 +89,12 @@ function find_block_comment(lines, i) {
 					case "class":
 						mode = "class";
 						result.type = "class";
+						result.namespace = directive_new.text;
 						break;
+					
+					case "internal":
+						result.internal = true;
+						// No break here on purpose, as we need to conditionally set mode VVVVV
 					
 					default:
 						if(mode == "description")
@@ -104,7 +107,10 @@ function find_block_comment(lines, i) {
 		}
 	}
 	
-	result.text = lines.slice(result.line, result.line_last+1);
+	result.text = lines.slice(
+		result.line,
+		result.line_last + result.type == "event" ? 0 : 1
+	);
 	
 	return result;
 }
@@ -131,6 +137,7 @@ function postprocess_directives(directives) {
 
 function parse_file(source) {
 	const result = {
+		type: "table",
 		namespace: null,
 		blocks: []
 	};
@@ -148,6 +155,10 @@ function parse_file(source) {
 		
 		switch(comment.type) {
 			case "namespace":
+				result.namespace = comment.namespace;
+				break;
+			case "class":
+				result.type = "class";
 				result.namespace = comment.namespace;
 				break;
 		}
