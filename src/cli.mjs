@@ -38,8 +38,8 @@ export default async function () {
 	let subcommand_file = path.join(
 		__dirname,
 		"subcommands",
-		cli.current_subcommand,
-		`${cli.current_subcommand}.mjs`
+		cli.current_subcommand.replace(/-/g, "_"),
+		`${cli.current_subcommand.replace(/-/g, "_")}.mjs`
 	);
 	
 	if(!fs.existsSync(subcommand_file)) {
