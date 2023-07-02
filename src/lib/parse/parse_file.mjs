@@ -17,19 +17,38 @@ function parse_comment_line(line) {
 }
 
 function parse_function(line) {
-	const match = line.match(/^\s*(?:local\s*)?function\s+([a-zA-Z_][a-zA-Z0-9_.]+)\s*\(([a-zA-Z0-9_., ]+)\)/);
-	if(match === null) return null;
+	const match = line.match(/^\s*(?:(?:local|return)\s+)?function\s+([a-zA-Z_][a-zA-Z0-9:_.]+)\s*\(([a-zA-Z0-9_.,\s]*)\)/);
+	console.error(`DEBUG:parse_function line '${line}' match`, match);
+	if(match === null) {
+		const match_anon = line.match(/^\s*(?:(?:local|return)\s*)?function\s*\(([a-zA-Z0-9_., ]*)\)/);
+		console.error(`DEBUG:parse_function line '${line}' match_anon`, match_anon);
+		if(match_anon == null) return null;
+		return {
+			type: "function",
+			function: null,
+			args: match_anon[1].split(/\s*,\s*/),
+			namespace: null,
+			instanced: false
+		};
+	}
 	
 	const result = {
 		type: "function",
 		function: match[1],
 		args: match[2].split(/\s*,\s*/),
 		namespace: null, // Default: whatever the current file-level namespace is
+		instanced: false
 	};
 	
 	const match_namespace = result.function.match(/^([^.]+)\..*$/);
 	if(match_namespace !== null)
 		result.namespace = match_namespace[1];
+	
+	if (result.function.indexOf(`:`) > -1) {
+		result.instanced = true;
+		result.function = result.function.match(/:(.*)/)[1];
+	}
+	
 	return result;
 }
 
@@ -41,7 +60,8 @@ function find_block_comment(lines, i) {
 		internal: false,
 		description: match[1],
 		directives: [],
-		line: i
+		line: i,
+		namespace: null
 	};
 	
 	let mode = "description";
@@ -51,10 +71,19 @@ function find_block_comment(lines, i) {
 		
 		if(comment_line === null) {
 			const function_def = parse_function(lines[j]);
+			// console.error(`DEBUG:parse_block function_def`, function_def);
 			result.line_last = j;
 			if(function_def === null) break;
-			result.name = function_def.function;
+			if(function_def.function === null) {
+				const directive = result.directives.find(item => item.directive == "name");
+				result.name = typeof directive === "undefined" ? null : directive.text;
+			}
+			else
+				result.name = function_def.function;
+			result.instanced = function_def.instanced;
 			result.args = function_def.args;
+			if(function_def.namespace !== null)
+				result.namespace = function_def.namespace;
 			break;
 		}
 		
@@ -140,10 +169,15 @@ function postprocess_directives(directives) {
 	return directives;
 }
 
+function make_fn_full_name(namespace, name) {
+	if(namespace === null || namespace.length === 0) return name;
+	return `${namespace}.${name}`;
+}
+
 function parse_file(source) {
 	const result = {
 		type: "table",
-		namespace: null,
+		namespace: "",
 		blocks: []
 	};
 	const lines = source.split(/\r?\n/);
@@ -165,6 +199,16 @@ function parse_file(source) {
 			case "class":
 				result.type = "class";
 				result.namespace = comment.namespace;
+				break;
+			
+			case "function":
+				result.name_full = make_fn_full_name(result.namespace, comment.name);
+				console.error(`DEBUG:file/line >> comment namespace`, result.namespace, `comment`, comment, `name_full`, result.name_full);
+				// No break on purpose
+			
+			default:
+				if(comment.namespace === null)
+					comment.namespace = result.namespace;
 				break;
 		}
 		
