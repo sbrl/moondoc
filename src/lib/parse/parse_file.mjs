@@ -146,6 +146,7 @@ function find_block_comment(lines, i) {
 		console.error(`DEBUG:parse_block lines`, lines.length, lines);
 		throw new Error(`Error: Failed to extract text for block`);
 	}
+	result.text = result.text.join("\n");
 	
 	return result;
 }
@@ -162,6 +163,7 @@ function postprocess_directives(directives) {
 				break;
 			case "return":
 			case "returns":
+				item.directive = "returns";
 				item.type = parts[0];
 				item.description = parts[1];
 				break;
@@ -191,8 +193,13 @@ function parse_file(source) {
 		
 		const comment = find_block_comment(lines, i);
 		if(comment === null) continue;
-		postprocess_directives(comment.directives);
 		result.blocks.push(comment);
+		
+		postprocess_directives(comment.directives);
+		comment.params = comment.directives.filter(item => item.directive == "param");
+		comment.returns = comment.directives.find(item => item.directive == "returns");
+		
+		
 		
 		switch(comment.type) {
 			case "namespace":
