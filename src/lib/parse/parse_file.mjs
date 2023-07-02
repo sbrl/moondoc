@@ -109,8 +109,13 @@ function find_block_comment(lines, i) {
 	
 	result.text = lines.slice(
 		result.line,
-		result.line_last + result.type == "event" ? 0 : 1
+		result.line_last + (result.type == "event" ? 0 : 1)
 	);
+	if(result.text.length === 0) {
+		console.error(`DEBUG:parse_block ERROR NO_TEXT result`, result);
+		console.error(`DEBUG:parse_block lines`, lines.length, lines);
+		throw new Error(`Error: Failed to extract text for block`);
+	}
 	
 	return result;
 }
