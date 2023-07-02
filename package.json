@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/sbrl/moondoc#readme",
   "dependencies": {
-    "applause-cli": "^1.8.2"
+    "applause-cli": "^1.8.2",
+    "glob": "^10.3.1",
+    "nightink": "^1.0.2"
   }
 }
