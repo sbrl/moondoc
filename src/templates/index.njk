@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{{ site }} | API Documentation</title>
+		
+		<meta name="generator" content="moondocs {{ package.version }}" />
+		
+		<style>
+			{{ css.styles }}
+		</style>
+	</head>
+	<body>
+		<section id="__moondocs__sidebar">
+			<h1>{{ site }}</h1>
+			
+			{% from "navigation.njk" import navigation %}
+			<nav>
+				<ul class="nav-namespaces">
+					{{ navigation(api) }}
+				</ul>
+			</nav>
+		</section>
+		
+		<main>
+			Coming soon
+			{# inside (many) for loops....: {% include "function.njk" %} #}
+		</main>
+		
+		<!---------------->
+		
+		<footer>
+			<p>Powered by moondocs</p>
+		</footer>
+	</body>
+</html>

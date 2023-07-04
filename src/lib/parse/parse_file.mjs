@@ -108,6 +108,7 @@ function find_block_comment(lines, i) {
 					case "event":
 						mode = "event";
 						result.type = "event";
+						result.event = comment_line.text;
 						break;
 					
 					case "namespace":

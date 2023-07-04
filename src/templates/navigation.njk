@@ -1,0 +1,41 @@
+{% macro navigation(namespace) %}
+{# COULD be a namespace.... but could also be a class. #}
+
+<li class="nav-{{ "class" if namespace.type == "class" else "namespace" }}">
+<strong><a href="#{{namespace.def.namespace}}">{{ namespace.namespace }}</a></strong>
+
+{% if namespace.children|length %} {# > 0 #}
+<ul class="nav-namespaces">
+	{% for sub_ns in namespace.children %}
+		{{ navigation(sub_ns) }}
+	{% endfor %}
+</ul>
+{% endif %}
+
+{# ------------ #}
+
+{% if namespace.functions|length %}
+<strong>Functions</strong>
+<ul class="nav-functions">
+	{% for function in namespace.functions %}
+	<li class="nav-function visibility-{{ "internal" if function.internal else "public" }}">
+		<a href="#{{ function.name_full }}">{{ function.name }}</a>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{# ------------ #}
+
+{% if events|length %}
+<strong>Events</strong>
+<ul class="nav-events">
+	{% for event in namespace.events %}
+	<li class="nav-event visibility-{{ "internal" if event.internal else "public" }}">
+		<a href="#{{ event.namespace }}:{{ event.event }}">{{ event.event }}</a>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
+{% endmacro %}

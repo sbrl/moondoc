@@ -86,7 +86,7 @@ export default async function(dirpath) {
 	const result = {};
 	
 	for(const filepath of filepaths_lua) {
-		l.log(`FILE ${filepath}`);
+		l.debug(`FILE ${filepath}`);
 		
 		const relative = path.relative(dirpath, filepath);
 		
