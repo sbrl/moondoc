@@ -20,6 +20,9 @@
 	{% for function in namespace.functions %}
 	<li class="nav-function visibility-{{ "internal" if function.internal else "public" }}">
 		<a href="#{{ function.name_full }}">{{ function.name }}</a>
+		{% if function.name_full|length == 0 %}
+			<pre><code>{{ function | dump('\t') }}</code></pre>
+		{% endif %}
 	</li>
 	{% endfor %}
 </ul>
