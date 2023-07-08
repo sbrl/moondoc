@@ -6,11 +6,16 @@
 		
 		<meta name="generator" content="moondocs {{ package.version }}" />
 		
-		<style>{{ css.styles }}</style>
+		<style>{{ css.styles | safe }}</style>
 	</head>
 	<body>
 		<section id="__moondocs__sidebar">
 			<h1>{{ site }}</h1>
+			
+			<p>
+			<label>Search</label>
+			<input type="search" id="__moondocs__search" placeholder="Requires Javascript to be enabled" />
+			</p>
 			
 			{% from "navigation.njk" import navigation %}
 			<nav>
@@ -26,13 +31,10 @@
 			<div class="namespaces">
 				{{ docs(api) }}
 			</div>
-			{# inside (many) for loops....: {% include "function.njk" %} #}
+			
+			<footer>
+				<p>Powered by moondocs</p>
+			</footer>
 		</main>
-		
-		<!---------------->
-		
-		<footer>
-			<p>Powered by moondocs</p>
-		</footer>
 	</body>
 </html>

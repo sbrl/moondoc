@@ -1,4 +1,43 @@
 html, body { font-size: 100%; }
 body {
 	font-family: sans-serif;
+	display: grid;
+	column-gap: 1em;
+	grid-template-columns: minmax(min-content, 2fr) 5fr;
+	grid-template-rows: auto auto;
+	grid-template-areas: "sidebar main";
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+}
+
+#__moondocs__sidebar {
+	grid-area: sidebar;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	padding: 0 0 0 1em;
+}
+
+main {
+	overflow-y: scroll;
+}
+
+nav > ul {
+	margin: 0;
+	padding: 0;
+}
+
+pre, code { font-size: 1rem; }
+
+main { grid-area: main; }
+
+footer { grid-area: footer; }
+
+
+
+
+.function-filename-link {
+	float: right;
+	margin: 0 1em 0 0;
 }
