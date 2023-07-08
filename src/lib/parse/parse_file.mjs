@@ -161,6 +161,14 @@ function postprocess_directives(directives) {
 				item.name = parts[0];
 				item.type = parts[1];
 				item.description = parts[2];
+				item.default_value = undefined;
+				
+				if(item.name.contains("=")) {
+					const param_subparts = item.name.split("=", 2);
+					item.name = param_subparts[0];
+					item.default_value = param_subparts[1];
+				}
+				
 				break;
 			case "return":
 			case "returns":
