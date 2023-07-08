@@ -14,6 +14,7 @@ function make_namespace(name) {
 		children: [],
 		functions: [],
 		events: [],
+		values: []
 	}
 }
 
@@ -67,6 +68,10 @@ function group_by_namespace(definitions) {
 					break;
 				case "function":
 					current.functions.push(block);
+					break;
+				
+				case "value":
+					current.values.push(block);
 					break;
 				
 				default:

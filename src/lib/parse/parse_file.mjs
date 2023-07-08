@@ -1,5 +1,7 @@
 "use strict";
 
+import log from '../io/NamespacedLog.mjs'; const l = log("parse_file");
+
 function parse_comment_line(line) {
 	const match_content = line.match(/^\s*-{2,}\s*(.*)$/);
 	if(match_content === null) return null;
@@ -123,6 +125,10 @@ function find_block_comment(lines, i) {
 						result.namespace = directive_new.text;
 						break;
 					
+					case "value":
+						result.type = "value";
+						break;
+						
 					case "internal":
 						result.internal = true;
 						// No break here on purpose, as we need to conditionally set mode VVVVV
@@ -163,7 +169,7 @@ function postprocess_directives(directives) {
 				item.description = parts[2];
 				item.default_value = undefined;
 				
-				if(item.name.contains("=")) {
+				if(item.name.indexOf("=") > -1) {
 					const param_subparts = item.name.split("=", 2);
 					item.name = param_subparts[0];
 					item.default_value = param_subparts[1];
@@ -202,6 +208,12 @@ function parse_file(source) {
 		
 		const comment = find_block_comment(lines, i);
 		if(comment === null) continue;
+		
+		if(comment.directives.length === 0) {
+			l.debug(`Ignoring block with no directives`, comment);
+			continue;
+		}
+		
 		result.blocks.push(comment);
 		
 		postprocess_directives(comment.directives);
