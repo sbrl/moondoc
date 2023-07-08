@@ -1,19 +1,50 @@
 <section>
-	<h3 id="{{ name_full }}">{{name}}</h3>
+	<h3 id="{{ function.name_full }}">
+		{{ function.name }}
+		<a href="#" title="{{ function.filename }}" class="function-filename-link">&#x1f517;</a>
+	</h3>
+	
+	<div class="function-description">
+		{{ function.description }}
+	</div>
 	
 	<h4>Arguments</h4>
 	<table>
 		<tr>
 			<th>Name</th>
 			<th>Type</th>
+			<th>Default value</th>
 			<th>Description</th>
 		</tr>
+		
+		{% for param in function.params %}
+		<tr>
+			<td><code>{{ param.name }}</code></td>
+			<td><code>{{ param.type }}</code></td>
+			<td>
+				{% if param.default_value %}
+					<code>{{ param.default_value }}</code>
+				{% else %}
+					<code>nil</code>
+				{% endif %}
+			</td>
+			<td>{{ param.description }}</td>
+		</tr>
+		{% endfor %}
 	</table>
-	TODO: Use Nunjucks instead of NightInk so we get an if directive for the return value here
+	
+	<h4>Returns</h4>
+	<p>{% if function.returns %}
+		<code>{{ function.returns.type}}</code>
+		{% if function.returns.description %}: {{ function.returns.description }}{% endif %}
+	{% else %}
+		<code class="unknown">nil</code>
+	{% endif %}</p>
 	
 	<details>
 		<summary>Source</summary>
-		<pre><code>{{text}}</code></pre>
+		<pre><code>{{function.text}}</code></pre>
+		<pre><code>{{function|dump("\t")}}</code></pre>
 	</details>
 	
 </section>

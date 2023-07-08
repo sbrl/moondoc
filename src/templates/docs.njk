@@ -1,0 +1,48 @@
+{% macro docs(namespace) %}
+{# COULD be a namespace.... but could also be a class. #}
+<section class="docs-namespace">
+
+	<h2 id="{{namespace.def.namespace}}" class="{{ "class" if namespace.type == "class" else "namespace" }}"><a href="#{{namespace.def.namespace}}">{{ namespace.namespace }}</a></h2>
+	
+	<div class="namespace-description">
+		{{ namespace.def.description }}
+	</div>
+
+	{% if namespace.children|length %} {# > 0 #}
+	<div class="namespaces">
+		{% for sub_ns in namespace.children %}
+			{{ docs(sub_ns) }}
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{# ------------ #}
+
+	{# TODO: Do values here #}
+
+	{% if namespace.functions|length %}
+
+	<section>
+		<h3 id="{{namespace.def.namespace}}__@@functions">Functions</h3>
+		
+		{% for function in namespace.functions %}
+			{% include "function.njk" %}
+		{% endfor %}
+	</section>
+	{% endif %}
+
+	{# ------------ #}
+
+	{% if events|length %}
+	<h3 id="{{namespace.def.namespace}}__@@events">Events</h3>
+	<ul class="events">
+		{% for event in namespace.events %}
+		<li class="event visibility-{{ "internal" if event.internal else "public" }}">
+			<a href="#{{ event.namespace }}:{{ event.event }}">{{ event.event }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+</section>
+{% endmacro %}

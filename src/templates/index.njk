@@ -23,7 +23,11 @@
 		</section>
 		
 		<main>
-			Coming soon
+			{% from "docs.njk" import docs %}
+			
+			<div class="namespaces">
+				{{ docs(api) }}
+			</div>
 			{# inside (many) for loops....: {% include "function.njk" %} #}
 		</main>
 		
