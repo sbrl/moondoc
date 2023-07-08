@@ -1,6 +1,14 @@
 {% macro navigation(namespace) %}
 {# COULD be a namespace.... but could also be a class. #}
 
+{% if namespace.namespace == "." %}
+
+{% for sub_ns in namespace.children %}
+	{{ navigation(sub_ns) }}
+{% endfor %}
+
+{% else %}
+
 <li class="nav-{{ "class" if namespace.type == "class" else "namespace" }}">
 <strong><a href="#{{namespace.def.namespace}}">{{ namespace.namespace }}</a></strong>
 
@@ -39,6 +47,8 @@
 	</li>
 	{% endfor %}
 </ul>
+{% endif %}
+
 {% endif %}
 
 {% endmacro %}

@@ -6,6 +6,7 @@ import path from 'path';
 import log from '../io/NamespacedLog.mjs'; const l = log("make_site");
 import nunjucks from 'nunjucks';
 import CleanCSS from 'clean-css';
+import { minify as clean_html } from 'html-minifier-terser';
 
 // HACK: Make sure __dirname is defined when using es6 modules. I forget where I found this - a PR with a source URL would be great!
 const __dirname = import.meta.url.slice(7, import.meta.url.lastIndexOf("/"));
@@ -28,7 +29,24 @@ export default async function make_site(root) {
 		{ autoescape: true }
 	);
 	
-	console.log(root);
+	// console.log(root);
 	
-	return nunjucks.render("index.njk", root);
+	const result = nunjucks.render("index.njk", root);
+	const result_min = await clean_html(result, {
+		collapseWhitespace: true,
+		removeComments: true,
+		decodeEntities: true,
+		removeEmptyAttributes: true,
+		collapseBooleanAttributes: true,
+		removeRedundantAttributes: true,
+		removeScriptTypeAttributes: true,
+		removeStyleLinkTypeAttributes: true,
+		sortAttributes: true,
+		sortClassName: true,
+		useShortDoctype: true
+	});
+	
+	l.log(`HTML minified, reducing size by ${((1 - (result_min.length/result.length))*100).toFixed(2)}%`);
+	
+	return result_min;
 }

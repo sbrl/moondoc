@@ -1,4 +1,12 @@
 {% macro docs(namespace) %}
+{% if namespace.namespace == "." %}
+
+{% for sub_ns in namespace.children %}
+	{{ docs(sub_ns) }}
+{% endfor %}
+
+{% else %}
+
 {# COULD be a namespace.... but could also be a class. #}
 <section class="docs-namespace">
 
@@ -45,4 +53,7 @@
 	{% endif %}
 
 </section>
+
+{% endif %}
+
 {% endmacro %}
