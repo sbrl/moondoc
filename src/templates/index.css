@@ -71,6 +71,24 @@ tr:nth-child(odd) > td {
 
 footer { grid-area: footer; }
 
+
+h3.function {
+	margin-bottom: 0;
+}
+.anchor-link {
+	float: right;
+	margin: 0 1em 0 0;
+	font-size: 1rem;
+	vertical-align: middle;
+}
+.function-description {
+	margin: 0.5em 0;
+}
+h4 {
+	margin: 0.5em 0 0 0;
+}
+
+
 h2.namespace:before, h2.class:before, h3.function:before {
 	content: "";
 	display: inline-block;
@@ -87,9 +105,4 @@ h2.class:before {
 }
 h3.function:before {
 	background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpwdXJwbGU7c3Ryb2tlLWxpbmVjYXA6cm91bmRlZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLXdpZHRoOjEwOyIgZD0ibTYyIDE2LTEyLTYtNDAgMjAgNDAgMjB2NDVMMTAgNzVWMzBtNDAtMjAgNDAgMjB2NDVMNTAgOTVsLTE4LTltMTgtMzYgNDAtMjAiLz48L3N2Zz4K);
-}
-
-.function-filename-link {
-	float: right;
-	margin: 0 1em 0 0;
 }

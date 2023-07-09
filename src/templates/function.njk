@@ -1,8 +1,12 @@
 <section>
 	<h3 id="{{ function.name_full }}" class="function">
 		{{ function.name }}
-		<a href="#" title="{{ function.filename }}" class="function-filename-link">&#x1f517;</a>
+		<a href="#" title="{{ function.name_full }}" class="anchor-link">&#x1f517;</a>
 	</h3>
+	
+	<div class="filename-link-p">
+		<a href="#" class="filename-link">{{ function.filename }}:{{ function.line }}</a>
+	</div>
 	
 	<div class="function-description">
 		{{ function.description }}
@@ -41,10 +45,10 @@
 		<code class="unknown">nil</code>
 	{% endif %}</p>
 	
-	{# <details>
+	<details>
 		<summary>Source</summary>
 		<pre><code>{{function.text}}</code></pre>
 		<pre><code>{{function|dump("\t")}}</code></pre>
-	</details> #}
+	</details>
 	
 </section>

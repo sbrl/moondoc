@@ -10,7 +10,10 @@
 {# COULD be a namespace.... but could also be a class. #}
 <section class="docs-namespace">
 
-	<h2 id="{{namespace.def.namespace}}" class="{{ "class" if namespace.type == "class" else "namespace" }}"><a href="#{{namespace.def.namespace}}">{{ namespace.namespace }}</a></h2>
+	<h2 id="{{namespace.def.namespace}}" class="{{ "class" if namespace.type == "class" else "namespace" }}">
+		{{ namespace.namespace }}
+		<a href="#{{namespace.def.namespace}}" title="{{namespace.def.namespace}}" class="anchor-link">&#x1f517;</a>
+	</h2>
 	
 	<div class="namespace-description">
 		{{ namespace.def.description }}
