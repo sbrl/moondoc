@@ -12,10 +12,12 @@
 		<section id="__moondocs__sidebar">
 			<h1>{{ site }}</h1>
 			
-			<p>
-			<label>Search</label>
-			<input type="search" id="__moondocs__search" placeholder="Requires Javascript to be enabled" />
-			</p>
+			<div class="search-box">
+				<label for="__moondocs__search">Search</label>
+				<input type="search" id="__moondocs__search" placeholder="Requires Javascript to be enabled" />
+			</div>
+			
+			<hr />
 			
 			{% from "navigation.njk" import navigation %}
 			<nav>
