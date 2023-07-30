@@ -5,6 +5,7 @@
 	/* --bg: #ededef; */
 	--bg: #f7f0f0;
 	--bg-alt: #f1e7e7;
+	--bg-dark: #d8d0d0;
 	--a: #347ee4;
 	
 	--table: hsla(0, 0%, 80%, 0.4);
@@ -19,6 +20,7 @@
 		--text-trans: #eeea;
 		--bg: #313338;
 		--bg-alt: #2b2d31;
+		--bg-dark: #1e1f23;
 		--a: #4080ff;
 		
 		--table: hsla(0, 0%, 40%, 0.4);
@@ -37,7 +39,7 @@ html, body { font-size: 100%; }
 body {
 	font-family: Ubuntu, sans-serif;
 	display: grid;
-	column-gap: 1em;
+	column-gap: 0.7em;
 	grid-template-columns: minmax(min-content, 2fr) 5fr;
 	grid-template-rows: auto auto;
 	grid-template-areas: "sidebar main";
@@ -46,7 +48,12 @@ body {
 	height: 100vh;
 	
 	color: var(--text);
+	background: var(--bg-dark);
+}
+
+main {
 	background: var(--bg);
+	padding: 0 1em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -142,6 +149,10 @@ input[type=search] {
 }
 input[type=search]:focus {
 	filter: none;
+}
+
+.docs-namespace {
+	border: 0.5em 0 solid var(--table);
 }
 
 .nav-namespaces, .nav-functions {
