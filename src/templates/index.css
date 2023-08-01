@@ -152,6 +152,9 @@ input[type=search]:focus {
 main > .namespaces > .docs-namespace:first-child {
 	margin-top: 0;
 }
+main > .namespaces > .docs-namespace:last-child {
+	margin-bottom: 0;
+}
 .docs-namespace {
 	border: 0.5em 0 solid var(--table);
 	background: var(--bg);
