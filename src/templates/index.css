@@ -52,13 +52,16 @@ body {
 }
 
 main {
-	background: var(--bg);
-	padding: 0 1em;
+	/* background: var(--bg); */
+	/* padding: 0 1em; */
+	overflow-y: scroll;
+	grid-area: main;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	color: var(--headers);
 }
+h2, h3 { margin: 0 0 1em 0; }
 
 #__moondocs__sidebar {
 	background: var(--bg-alt);
@@ -75,16 +78,10 @@ hr {
 	width: 100%;
 }
 
-main {
-	overflow-y: scroll;
-}
-
 nav > ul {
 	margin: 0;
 	padding: 0;
 }
-
-main { grid-area: main; }
 
 pre, code {
 	font-family: "Ubuntu Mono", monospace;
@@ -153,6 +150,18 @@ input[type=search]:focus {
 
 .docs-namespace {
 	border: 0.5em 0 solid var(--table);
+	background: var(--bg);
+	padding: 1em 0 1em 1em;
+	margin: 1em 0;
+}
+.docs-namespace .docs-namespace {
+	box-shadow: 0 0 1em var(--bg-dark);
+}
+
+.docs-function {
+	margin: 1em 0 1em -1em;
+	padding: 1em 0 1em 1em;
+	box-shadow: 0 0 1em var(--bg-dark);
 }
 
 .nav-namespaces, .nav-functions {
@@ -172,7 +181,7 @@ input[type=search]:focus {
 	vertical-align: middle;
 }
 .nav-namespace:before, h2.namespace:before {
-	background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48dGV4dCB4PSI1MCIgeT0iNTAiIGFyaWEtaGlkZGVuPSJ0cnVlIiBzdHlsZT0icGFpbnQtb3JkZXI6c3Ryb2tlO3N0cm9rZS13aWR0aDouMWVtO3N0cm9rZTojZWVlO2ZvbnQ6Ym9sZCAzZW0gc2Fucy1zZXJpZjt0ZXh0LWFuY2hvcjptaWRkbGU7ZG9taW5hbnQtYmFzZWxpbmU6bWlkZGxlIj57IH08L3RleHQ+PC9zdmc+Cg==) no-repeat center/cover;
+	background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20x%3D%2250%22%20y%3D%2250%22%20aria-hidden%3D%22true%22%20style%3D%22paint-order%3Astroke%3Bstroke-width%3A.2em%3Bstroke%3A%23eee%3Bfont%3Abold%203em%20sans-serif%3Btext-anchor%3Amiddle%3Bdominant-baseline%3Amiddle%22%3E%7B%20%7D%3C%2Ftext%3E%3C%2Fsvg%3E) no-repeat center/cover;
 }
 .nav-class:before, h2.class:before {
 	background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cG9seWxpbmUgcG9pbnRzPSIyMCwzNSA2NSwzNSA0MCwzNSA0MCw3NSA2NSw3NSIgc3R5bGU9InN0cm9rZTojNzc3O3N0cm9rZS13aWR0aDo0O2ZpbGw6bm9uZSIvPjxnIHRyYW5zZm9ybT0icm90YXRlKC00NSA1MCA1MCkiIHN0eWxlPSJmaWxsOiNlOTEiPjxyZWN0IHg9IjMzIiB5PSIwIiB3aWR0aD0iMzUiIGhlaWdodD0iMjUiLz48cmVjdCB4PSI1NSIgeT0iNDUiIHdpZHRoPSIyNSIgaGVpZ2h0PSIxOCIvPjxyZWN0IHg9IjMwIiB5PSI3NSIgd2lkdGg9IjI1IiBoZWlnaHQ9IjE4Ii8+PC9nPjwvc3ZnPgo=) no-repeat center/cover;
