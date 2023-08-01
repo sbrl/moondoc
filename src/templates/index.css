@@ -148,6 +148,9 @@ input[type=search]:focus {
 	filter: none;
 }
 
+.namespaces > .docs-namespace:first-child {
+	margin-top: 0;
+}
 .docs-namespace {
 	border: 0.5em 0 solid var(--table);
 	background: var(--bg);
