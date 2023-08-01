@@ -85,7 +85,7 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 	return result;
 }
 
-export default async function(dirpath) {
+export default async function(dirpath, software=null) {
 	const filepaths_lua = await glob(path.join(dirpath, "**/*.lua"), {
 		ignore: [ '.*/**' ]
 	});
@@ -101,7 +101,7 @@ export default async function(dirpath) {
 		
 		result[relative] = parse_file(source);
 	}
-	const api = await group_by_namespace(result, dirpath);
+	const api = await group_by_namespace(result, dirpath, software);
 	
 	return api;
 }

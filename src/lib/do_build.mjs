@@ -12,11 +12,11 @@ import make_site from './generate/make_site.mjs';
 // HACK: Make sure __dirname is defined when using es6 modules. I forget where I found this - a PR with a source URL would be great!
 const __dirname = import.meta.url.slice(7, import.meta.url.lastIndexOf("/"));
 
-export default async function(dirpath_in) {
+export default async function(dirpath_in, software=null) {
 	l.log(`Starting build`);
 	
 	let time_parse = new Date();
-	const api = await parse_directory(dirpath_in);
+	const api = await parse_directory(dirpath_in, software);
 	time_parse = pretty_ms(new Date() - time_parse);
 	
 	l.log(`Parsed in ${time_parse}`);
