@@ -8,6 +8,8 @@ import log from '../io/NamespacedLog.mjs'; const l = log("parse");
 import parse_file from './parse_file.mjs';
 import git_make_web_uri from '../io/git_make_web_uri.mjs';
 
+const collator = new Intl.Collator();
+
 function make_namespace(name) {
 	return {
 		type: "namespace",
@@ -35,6 +37,9 @@ function find_namespace(api, namespace) {
 		if(!found) {
 			const sub_ns = make_namespace(part);
 			current.children.push(sub_ns);
+			current.children.sort((a, b) => {
+				return collator.compare(a.namespace, b.namespace);
+			});
 			current = sub_ns;
 		}
 	}
@@ -68,10 +73,12 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 				
 				case "event":
 					current.events.push(block);
+					current.events.sort((a, b) => collator.compare(a.event, b.event));
 					break;
 				case "function":
 					block.url = await git_make_web_uri(dirpath_repo, block.filename, software, block.line, block.line_last);
 					current.functions.push(block);
+					current.functions.sort((a, b) => collator.compare(a.name, b.name));
 					break;
 				
 				case "value":
