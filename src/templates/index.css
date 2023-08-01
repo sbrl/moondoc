@@ -61,7 +61,8 @@ main {
 h1, h2, h3, h4, h5, h6 {
 	color: var(--headers);
 }
-h2, h3 { margin: 0 0 1em 0; }
+h2 { margin: 0; }
+h3 { margin: 0 0 1em 0; }
 
 #__moondocs__sidebar {
 	background: var(--bg-alt);
@@ -167,10 +168,15 @@ main > .namespaces > .docs-namespace:first-child {
 	box-shadow: 0 0 1em var(--bg-dark);
 }
 
+.namespace-description {
+	margin: 1em 0 2em 0;
+}
+
 .nav-namespaces, .nav-functions {
 	list-style-type: none;
 	margin: 0 0.5em 0 0;
 }
+h2 + .filename-link-p { margin: 0 0 1em 0; }
 .filename-link:after {
 	background: var(--img-external) no-repeat center/cover;
 	margin: 0 0 0 0.3em;

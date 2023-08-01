@@ -41,13 +41,13 @@ async function make_web_url(dirpath_repo, filepath, software=null) {
 export default async function(dirpath_repo, filepath, software=null, line_start=null, line_end=null) {
 	let [source, web_url] = await make_web_url(dirpath_repo, filepath, software);
 	if(line_start !== null)
-		web_url += `#L${line_start}`;
+		web_url += `#L${line_start+1}`;
 	if(line_end !== null) {
 		// Yay, more different formats...!
 		if(["sr.ht"].includes(source))
-			web_url += `-${line_end}`;
+			web_url += `-${line_end+1}`;
 		else
-			web_url += `-L${line_end}`;
+			web_url += `-L${line_end+1}`;
 	}
 	
 		return web_url;

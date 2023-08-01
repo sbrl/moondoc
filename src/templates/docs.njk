@@ -14,6 +14,9 @@
 		{{ namespace.namespace }}
 		<a href="#{{namespace.def.namespace}}" title="{{namespace.def.namespace}}" class="anchor-link">&#x1f517;</a>
 	</h2>
+	<div class="filename-link-p">
+		<a href="{{ namespace.url }}" class="filename-link">{{ namespace.def.filename }}:{{ namespace.def.line }}</a>
+	</div>
 	
 	<div class="namespace-description">
 		{{ namespace.def.description }}
