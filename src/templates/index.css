@@ -148,7 +148,7 @@ input[type=search]:focus {
 	filter: none;
 }
 
-.namespaces > .docs-namespace:first-child {
+main > .namespaces > .docs-namespace:first-child {
 	margin-top: 0;
 }
 .docs-namespace {

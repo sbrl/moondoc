@@ -6,6 +6,7 @@ import { glob } from 'glob';
 import log from '../io/NamespacedLog.mjs'; const l = log("parse");
 
 import parse_file from './parse_file.mjs';
+import git_make_web_uri from '../io/git_make_web_uri.mjs';
 
 function make_namespace(name) {
 	return {
@@ -40,7 +41,7 @@ function find_namespace(api, namespace) {
 	return current;
 }
 
-function group_by_namespace(definitions) {
+async function group_by_namespace(definitions, dirpath_repo, software=null) {
 	const result = make_namespace(".");
 	
 	for(const filename in definitions) {
@@ -67,6 +68,7 @@ function group_by_namespace(definitions) {
 					current.events.push(block);
 					break;
 				case "function":
+					block.url = await git_make_web_uri(dirpath_repo, block.filename, software, block.line, block.line_last);
 					current.functions.push(block);
 					break;
 				
@@ -99,8 +101,7 @@ export default async function(dirpath) {
 		
 		result[relative] = parse_file(source);
 	}
-	
-	const api = group_by_namespace(result);
+	const api = await group_by_namespace(result, dirpath);
 	
 	return api;
 }
