@@ -23,7 +23,7 @@
 {# ------------ #}
 
 {% if namespace.functions|length %}
-<strong>Functions</strong>
+<div class="nav-word"><strong>Functions</strong></div>
 <ul class="nav-functions">
 	{% for function in namespace.functions %}
 	<li class="nav-function visibility-{{ "internal" if function.internal else "public" }}">
@@ -38,8 +38,8 @@
 
 {# ------------ #}
 
-{% if events|length %}
-<strong>Events</strong>
+{% if namespace.events|length %}
+<div class="nav-word"><strong>Events</strong></div>
 <ul class="nav-events">
 	{% for event in namespace.events %}
 	<li class="nav-event visibility-{{ "internal" if event.internal else "public" }}">

@@ -1,0 +1,28 @@
+<section class="docs-event">
+	<h3 id="{{ event.namespace }}:{{ event.event }}" class="event">
+		{{ event.event }}
+		<a href="#" title="{{ event.namespace }}:{{ event.event }}" class="anchor-link">&#x1f517;</a>
+	</h3>
+	
+	<div class="filename-link-p">
+		<a href="{{ event.url }}" class="filename-link">{{ event.filename }}:{{ event.line }}</a>
+	</div>
+	
+	<div class="event-description">
+		{{ event.description }}
+	</div>
+	
+	{% for directive in event.directives %}
+		{% if directive.directive == "format" %}
+		<h4>Format</h4>
+		<pre><code>{{ directive.text }}</code></pre>
+		{% endif %}
+	{% endfor %}
+	
+	<details>
+		<summary>Source</summary>
+		<pre><code>{{event.text}}</code></pre>
+		<pre><code>{{event|dump("\t")}}</code></pre>
+	</details>
+	
+</section>
