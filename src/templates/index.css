@@ -182,7 +182,7 @@ main > .namespaces > .docs-namespace:last-child {
 }
 
 .namespace-description {
-	margin: 1em 0 2em 0;
+	margin: 1em 0.5em 2em 0;
 }
 
 .nav-word { margin-left: 2.2em;}

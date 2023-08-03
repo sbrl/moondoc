@@ -21,7 +21,7 @@
 	</div>
 	
 	<div class="namespace-description">
-		{{ namespace.def.description }}
+		{% markdown %}{{ namespace.def.description }}{% endmarkdown %}
 	</div>
 
 	{% if namespace.children|length %} {# > 0 #}

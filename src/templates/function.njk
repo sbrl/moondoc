@@ -9,7 +9,7 @@
 	</div>
 	
 	<div class="function-description">
-		{{ function.description }}
+		{% markdown %}{{ function.description }}{% endmarkdown %}
 	</div>
 	
 	<h4>Arguments</h4>
@@ -32,7 +32,7 @@
 					<code>nil</code>
 				{% endif %}
 			</td>
-			<td>{{ param.description }}</td>
+			<td>{% markdown %}{{ param.description }}{% endmarkdown %}</td>
 		</tr>
 		{% endfor %}
 	</table>
@@ -40,7 +40,7 @@
 	<h4>Returns</h4>
 	<p>{% if function.returns %}
 		<code>{{ function.returns.type}}</code>
-		{% if function.returns.description %}: {{ function.returns.description }}{% endif %}
+		{% if function.returns.description %}: {% markdown %}{{ function.returns.description }}{% endmarkdown %}{% endif %}
 	{% else %}
 		<code class="unknown">nil</code>
 	{% endif %}</p>

@@ -30,8 +30,11 @@
     "git-url-parse": "^13.1.0",
     "glob": "^10.3.3",
     "html-minifier-terser": "^7.2.0",
+    "marked": "^6.0.0",
     "nightink": "^1.0.2",
     "nunjucks": "^3.2.4",
-    "pretty-ms": "^8.0.0"
+    "nunjucks-markdown": "^2.0.1",
+    "pretty-ms": "^8.0.0",
+    "sanitize-html": "^2.11.0"
   }
 }
