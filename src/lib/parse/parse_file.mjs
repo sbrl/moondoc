@@ -240,6 +240,7 @@ function parse_file(source) {
 			
 			case "function":
 				comment.name_full = make_fn_full_name(result.namespace, comment.name);
+				comment.namespace = result.namespace;
 				// No break on purpose
 			
 			default:

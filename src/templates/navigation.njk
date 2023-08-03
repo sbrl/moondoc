@@ -12,7 +12,7 @@
 <li class="nav-{{ "class" if namespace.type == "class" else "namespace" }}">
 <strong><a href="#{{namespace.def.namespace}}">{{ namespace.namespace }}</a></strong>
 
-{{namespace.children|length}} sub namespaces, {{ namespace.functions|length }} functions, {{ namespace.events|length }} events
+{# {{namespace.children|length}} sub namespaces, {{ namespace.functions|length }} functions, {{ namespace.events|length }} events #}
 
 {% if namespace.children|length %} {# > 0 #}
 <ul class="nav-namespaces">

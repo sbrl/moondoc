@@ -60,18 +60,17 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 			block.filename = filename;
 			switch(block.type) {
 				case "namespace":
-					namespace_name = block.namespace;
-					current = find_namespace(result, namespace_name);
+					current = find_namespace(result, block.namespace);
 					current.def = block;
 					current.url = await git_make_web_uri(dirpath_repo, current.def.filename, software, current.def.line, current.def.line_last);
 					break;
 				
 				case "class":
-					namespace_name = block.namespace;
-					current = find_namespace(result, namespace_name);
+					current = find_namespace(result, block.namespace);
 					current.type = "class";
 					current.def = block;
 					current.url = await git_make_web_uri(dirpath_repo, current.def.filename, software, current.def.line, current.def.line_last);
+					l.log(`DEBUG:group_by_namespace CLASS ${block.namespace}`, current);
 					break;
 				
 				case "event":
