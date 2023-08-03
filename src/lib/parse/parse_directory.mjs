@@ -2,7 +2,10 @@
 
 import fs from 'fs';
 import path from 'path';
+
 import { glob } from 'glob';
+import as_table from 'as-table';
+
 import log from '../io/NamespacedLog.mjs'; const l = log("parse");
 
 import parse_file from './parse_file.mjs';
@@ -76,8 +79,11 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 					current.events.sort((a, b) => collator.compare(a.event, b.event));
 					break;
 				case "function":
+					if(block.namespace)
+						current = find_namespace(result, block.namespace);
 					block.url = await git_make_web_uri(dirpath_repo, block.filename, software, block.line, block.line_last);
 					current.functions.push(block);
+					l.log(`DEBUG:group_by_namespace FUNCTION ${block.namespace} >> ${block.name}`);
 					current.functions.sort((a, b) => collator.compare(a.name, b.name));
 					break;
 				
@@ -100,6 +106,7 @@ export default async function(dirpath, software=null) {
 	});
 	
 	const result = {};
+	const to_display = [];
 	
 	for(const filepath of filepaths_lua) {
 		l.debug(`FILE ${filepath}`);
@@ -109,7 +116,13 @@ export default async function(dirpath, software=null) {
 		const source = await fs.promises.readFile(filepath, "utf-8");
 		
 		result[relative] = parse_file(source);
+		
+		to_display.push({filepath: relative, blocks: result[relative].blocks.length});
 	}
+	to_display.sort((a, b) => a.filepath.localeCompare(b.filepath));
+	l.log(`Blocks report:`);
+	l.log(`\n${as_table(to_display)}`);
+	
 	const api = await group_by_namespace(result, dirpath, software);
 	
 	return api;

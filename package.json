@@ -24,6 +24,7 @@
   "homepage": "https://github.com/sbrl/moondoc#readme",
   "dependencies": {
     "applause-cli": "^1.8.2",
+    "as-table": "^1.0.55",
     "clean-css": "^5.3.2",
     "git-remotes": "^1.0.2",
     "git-url-parse": "^13.1.0",

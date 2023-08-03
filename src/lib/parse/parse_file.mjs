@@ -112,6 +112,11 @@ function find_block_comment(lines, i) {
 						result.type = "event";
 						result.event = comment_line.text;
 						break;
+					case "module":
+						mode = "module-def";
+						result.type = "module-def";
+						result.namespace = directive_new.text;
+						break;
 					
 					case "namespace":
 						mode = "namespace";
@@ -214,7 +219,8 @@ function parse_file(source) {
 			continue;
 		}
 		
-		result.blocks.push(comment);
+		if(comment.type !== "module-def")
+			result.blocks.push(comment);
 		
 		postprocess_directives(comment.directives);
 		comment.params = comment.directives.filter(item => item.directive == "param");
@@ -224,6 +230,7 @@ function parse_file(source) {
 		
 		switch(comment.type) {
 			case "namespace":
+			case "module-def":
 				result.namespace = comment.namespace;
 				break;
 			case "class":
