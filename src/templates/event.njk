@@ -9,7 +9,7 @@
 	</div>
 	
 	<div class="event-description">
-		{{ event.description }}
+		{% markdown %}{{ event.description }}{% endmarkdown %}
 	</div>
 	
 	{% for directive in event.directives %}
