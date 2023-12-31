@@ -6,7 +6,7 @@ import path from 'path';
 import { glob } from 'glob';
 import as_table from 'as-table';
 
-import log from '../io/NamespacedLog.mjs'; const l = log("parse");
+import log from '../io/NamespacedLog.mjs'; const l = log("parse_dir");
 
 import parse_file from './parse_file.mjs';
 import git_make_web_uri from '../io/git_make_web_uri.mjs';
@@ -70,7 +70,8 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 					current.type = "class";
 					current.def = block;
 					current.url = await git_make_web_uri(dirpath_repo, current.def.filename, software, current.def.line, current.def.line_last);
-					l.log(`DEBUG:group_by_namespace CLASS ${block.namespace}`, current);
+					l.log(`🏠 CLASS ${block.namespace}`);
+					l.debug(`CLASSDEF`, current);
 					break;
 				
 				case "event":
@@ -82,7 +83,7 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 						current = find_namespace(result, block.namespace);
 					block.url = await git_make_web_uri(dirpath_repo, block.filename, software, block.line, block.line_last);
 					current.functions.push(block);
-					l.log(`DEBUG:group_by_namespace FUNCTION ${block.namespace} >> ${block.name}`);
+					l.log(`📦 FUNCTION ${block.namespace} >> ${block.name}`);
 					current.functions.sort((a, b) => collator.compare(a.name, b.name));
 					break;
 				

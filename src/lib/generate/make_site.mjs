@@ -24,7 +24,7 @@ async function get_css(minify=false) {
 }
 
 export default async function make_site(root, options) {
-	l.warn(`DEBUG options`, options);
+	l.debug(`DEBUG options`, options);
 	
 	root.css = await get_css(options.css_minify);
 	if(root.css.stats)
