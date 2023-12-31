@@ -10,6 +10,7 @@ import { minify as clean_html } from 'html-minifier-terser';
 import nunjucks_markdown from 'nunjucks-markdown';
 
 import markdown2html from '../parse/markdown2html.mjs';
+import get_js from './get_js.mjs';
 
 // HACK: Make sure __dirname is defined when using es6 modules. I forget where I found this - a PR with a source URL would be great!
 const __dirname = import.meta.url.slice(7, import.meta.url.lastIndexOf("/"));
@@ -22,10 +23,14 @@ async function get_css(minify=false) {
 	else return { styles: css };
 }
 
-export default async function make_site(root) {
-	root.css = await get_css(true);
+export default async function make_site(root, options) {
+	l.warn(`DEBUG options`, options);
+	
+	root.css = await get_css(options.css_minify);
 	if(root.css.stats)
 		l.log(`CSS minified, reducing size by ${(root.css.stats.efficiency * 100).toFixed(2)}%`);
+	
+	root.js = await get_js(options.js_sourcemap); // include_sourcemap
 	
 	l.debug(`Templates root is at '${path.join(__dirname, "../../templates")}'`);
 	const env = nunjucks.configure(
@@ -38,21 +43,23 @@ export default async function make_site(root) {
 	// console.log(root);
 	
 	const result = nunjucks.render("index.njk", root);
-	const result_min = await clean_html(result, {
-		collapseWhitespace: true,
-		removeComments: true,
-		decodeEntities: true,
-		removeEmptyAttributes: true,
-		collapseBooleanAttributes: true,
-		removeRedundantAttributes: true,
-		removeScriptTypeAttributes: true,
-		removeStyleLinkTypeAttributes: true,
-		sortAttributes: true,
-		sortClassName: true,
-		useShortDoctype: true
-	});
-	
-	l.log(`HTML minified, reducing size by ${((1 - (result_min.length/result.length))*100).toFixed(2)}%`);
-	
-	return result_min;
+	if(options.html_minify) {
+		const result_min = await clean_html(result, {
+			collapseWhitespace: true,
+			removeComments: true,
+			decodeEntities: true,
+			removeEmptyAttributes: true,
+			collapseBooleanAttributes: true,
+			removeRedundantAttributes: true,
+			removeScriptTypeAttributes: true,
+			removeStyleLinkTypeAttributes: true,
+			sortAttributes: true,
+			sortClassName: true,
+			useShortDoctype: true
+		});
+		
+		l.log(`HTML minified, reducing size by ${((1 - (result_min.length/result.length))*100).toFixed(2)}%`);
+		return result_min;
+	}
+	return result;
 }

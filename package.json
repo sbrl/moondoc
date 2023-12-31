@@ -1,41 +1,43 @@
 {
-  "name": "moondoc",
-  "version": "1.0.0",
-  "description": "Automatic Lua documentation tool",
-  "main": "src/index.mjs",
-  "scripts": {
-    "test": "echo \"No tests have been written yet\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sbrl/moondoc.git"
-  },
-  "keywords": [
-    "lua",
-    "documentation",
-    "generator",
-    "static site generator"
-  ],
-  "author": "Starbeamrainbowlabs",
-  "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/sbrl/moondoc/issues"
-  },
-  "homepage": "https://github.com/sbrl/moondoc#readme",
-  "dependencies": {
-    "applause-cli": "^1.8.2",
-    "as-table": "^1.0.55",
-    "clean-css": "^5.3.3",
-    "esbuild": "^0.19.11",
-    "git-remotes": "^1.0.2",
-    "git-url-parse": "^13.1.1",
-    "glob": "^10.3.10",
-    "html-minifier-terser": "^7.2.0",
-    "marked": "^11.1.1",
-    "nightink": "^1.0.2",
-    "nunjucks": "^3.2.4",
-    "nunjucks-markdown": "^2.0.1",
-    "pretty-ms": "^8.0.0",
-    "sanitize-html": "^2.11.0"
-  }
+	"name": "moondoc",
+	"version": "1.0.0",
+	"description": "Automatic Lua documentation tool",
+	"main": "src/index.mjs",
+	"scripts": {
+		"test": "echo \"No tests have been written yet\""
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sbrl/moondoc.git"
+	},
+	"keywords": [
+		"lua",
+		"documentation",
+		"generator",
+		"static site generator"
+	],
+	"author": "Starbeamrainbowlabs",
+	"license": "MPL-2.0",
+	"bugs": {
+		"url": "https://github.com/sbrl/moondoc/issues"
+	},
+	"homepage": "https://github.com/sbrl/moondoc#readme",
+	"dependencies": {
+		"applause-cli": "^1.8.2",
+		"as-table": "^1.0.55",
+		"clean-css": "^5.3.3",
+		"git-remotes": "^1.0.2",
+		"git-url-parse": "^13.1.1",
+		"glob": "^10.3.10",
+		"html-minifier-terser": "^7.2.0",
+		"marked": "^11.1.1",
+		"nightink": "^1.0.2",
+		"nunjucks": "^3.2.4",
+		"nunjucks-markdown": "^2.0.1",
+		"pretty-ms": "^8.0.0",
+		"sanitize-html": "^2.11.0"
+	},
+	"devDependencies": {
+		"esbuild": "^0.19.11"
+	}
 }
