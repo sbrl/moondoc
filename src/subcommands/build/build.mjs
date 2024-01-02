@@ -16,12 +16,13 @@ export default async function() {
 	
 	await write_safe(stream_out, await do_build(
 		settings.cli.input,
-		settings.cli.software,
 		{
 			css_minify: !settings.cli.debug_nominify,
 			js_sourcemap: settings.cli.debug_sourcemaps,
 			html_minify: !settings.cli.debug_nominify
-		}
+		},
+		settings.cli.software,
+		settings.cli.branch
 	));
 	await end_safe(stream_out);
 	

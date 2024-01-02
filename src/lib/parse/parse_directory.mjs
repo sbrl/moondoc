@@ -49,7 +49,7 @@ function find_namespace(api, namespace) {
 	return current;
 }
 
-async function group_by_namespace(definitions, dirpath_repo, software=null) {
+async function group_by_namespace(definitions, dirpath_repo, software=null, branch="__AUTO__") {
 	const result = make_namespace(".");
 	
 	for(const filename in definitions) {
@@ -62,14 +62,14 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 				case "namespace":
 					current = find_namespace(result, block.namespace);
 					current.def = block;
-					current.url = await git_make_web_uri(dirpath_repo, current.def.filename, software, current.def.line, current.def.line_last);
+					current.url = await git_make_web_uri(dirpath_repo, current.def.filename, software, branch, current.def.line, current.def.line_last);
 					break;
 				
 				case "class":
 					current = find_namespace(result, block.namespace);
 					current.type = "class";
 					current.def = block;
-					current.url = await git_make_web_uri(dirpath_repo, current.def.filename, software, current.def.line, current.def.line_last);
+					current.url = await git_make_web_uri(dirpath_repo, current.def.filename, software, branch, current.def.line, current.def.line_last);
 					l.log(`🏠 CLASS ${block.namespace}`);
 					l.debug(`CLASSDEF`, current);
 					break;
@@ -81,7 +81,7 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 				case "function":
 					if(block.namespace)
 						current = find_namespace(result, block.namespace);
-					block.url = await git_make_web_uri(dirpath_repo, block.filename, software, block.line, block.line_last);
+					block.url = await git_make_web_uri(dirpath_repo, block.filename, software, branch, block.line, block.line_last);
 					current.functions.push(block);
 					l.log(`📦 FUNCTION ${block.namespace} >> ${block.name}`);
 					current.functions.sort((a, b) => collator.compare(a.name, b.name));
@@ -100,7 +100,7 @@ async function group_by_namespace(definitions, dirpath_repo, software=null) {
 	return result;
 }
 
-export default async function(dirpath, software=null) {
+export default async function(dirpath, software=null, branch="__AUTO__") {
 	const filepaths_lua = await glob(path.join(dirpath, "**/*.lua"), {
 		ignore: [ '.*/**' ]
 	});
@@ -123,7 +123,7 @@ export default async function(dirpath, software=null) {
 	l.log(`Blocks report:`);
 	l.log(`\n${as_table(to_display)}`);
 	
-	const api = await group_by_namespace(result, dirpath, software);
+	const api = await group_by_namespace(result, dirpath, software, branch);
 	
 	return api;
 }

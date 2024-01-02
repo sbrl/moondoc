@@ -17,8 +17,13 @@ VERSION CHANGELOG HERE
 
 -------
 
+
+## v1.1
+- Add `--branch` CLI argument to main `build` subcommand
+
+
 ## v1.0.1
-- Declare `src/index.mjs` as binary `moondoc`
+- Declare `src/index.mjs` as binary `moondoc` for use in e.g. CI systems that check out a specific commit
 
 
 ## v1.0

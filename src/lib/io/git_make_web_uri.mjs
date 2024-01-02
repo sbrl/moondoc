@@ -5,25 +5,25 @@ import git_url_parse from 'git-url-parse';
 import git_remotes from './git_remotes.mjs';
 import git_current_branch from './git_current_branch.mjs';
 
-async function make_web_url(dirpath_repo, filepath, software=null) {
+async function make_web_url(dirpath_repo, filepath, software=null, branch = "__AUTO__") {
 	const remotes = await git_remotes(dirpath_repo);
 	if(remotes.length == 0) return null;
 	const remote_url = remotes[0].url;
 	
-	const branch = await git_current_branch(dirpath_repo);
-	if(branch == null) return null;
+	const branch_resolved = branch === "__AUTO__" ? await git_current_branch(dirpath_repo) : branch;
+	if(branch_resolved == null) return null;
 	
 	const parts = git_url_parse(remote_url);
 	const source = software == null ? parts.source : software;
 	switch(source) {
 		case "github.com":
-			return [source, `https://github.com/${parts.owner}/${parts.name}/blob/${branch}/${filepath}`];
+			return [source, `https://github.com/${parts.owner}/${parts.name}/blob/${branch_resolved}/${filepath}`];
 		case "gitlab.com":
-			return [source, `https://${parts.host}/${parts.owner}/${parts.name}/blob/${branch}/${filepath}`];
+			return [source, `https://${parts.host}/${parts.owner}/${parts.name}/blob/${branch_resolved}/${filepath}`];
 		case "sr.ht":
-			return [source, `https://${parts.host}/${parts.owner}/${parts.name}/tree/${branch}/item/src/${filepath}`];
+			return [source, `https://${parts.host}/${parts.owner}/${parts.name}/tree/${branch_resolved}/item/src/${filepath}`];
 		default: // Assume Gitea
-			return [source, `https://${parts.host}/${parts.owner}/${parts.name}/src/branch/${branch}/${filepath}`];
+			return [source, `https://${parts.host}/${parts.owner}/${parts.name}/src/branch/${branch_resolved}/${filepath}`];
 	}
 }
 
@@ -38,8 +38,8 @@ async function make_web_url(dirpath_repo, filepath, software=null) {
  *
  * @return	{string}                The generated web URL.
  */
-export default async function(dirpath_repo, filepath, software=null, line_start=null, line_end=null) {
-	let [source, web_url] = await make_web_url(dirpath_repo, filepath, software);
+export default async function(dirpath_repo, filepath, software=null, branch="__AUTO__", line_start=null, line_end=null) {
+	let [source, web_url] = await make_web_url(dirpath_repo, filepath, software, branch);
 	if(line_start !== null)
 		web_url += `#L${line_start+1}`;
 	if(line_end !== null) {
