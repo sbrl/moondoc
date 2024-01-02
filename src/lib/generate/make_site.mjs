@@ -15,6 +15,12 @@ import get_js from './get_js.mjs';
 // HACK: Make sure __dirname is defined when using es6 modules. I forget where I found this - a PR with a source URL would be great!
 const __dirname = import.meta.url.slice(7, import.meta.url.lastIndexOf("/"));
 
+const options_default = {
+	css_minify: true,
+	html_minify: true,
+	js_sourcemap: false,
+};
+
 async function get_css(minify=false) {
 	const css = await fs.promises.readFile(
 		path.join(__dirname, "../../templates/index.css")
@@ -23,7 +29,11 @@ async function get_css(minify=false) {
 	else return { styles: css };
 }
 
-export default async function make_site(root, options) {
+export default async function make_site(root, options={}) {
+	for(const key in options_default) {
+		if(options[key] === undefined)
+			options[key] = options_default[key];
+	}
 	l.debug(`DEBUG options`, options);
 	
 	root.css = await get_css(options.css_minify);
