@@ -130,9 +130,7 @@ Identical to [`@namespace`](#namespace) in that it sets the namespace of a file,
 > *All* namespaces **MUST** have at least one `@namespace` definition *somewhere* in the codebase.
 
 ### `@internal`
-Specifies that a function is internal and hence subject to change. Displays an icon next to the function to indicate this.
-
-TODO Implement displaying an icon as described.
+Specifies that a function is internal and hence subject to change. Displays an a icon (🔑) next to the function to indicate this.
 
 ### `@event`
 Indicates the current documentation block is documenting an event.
