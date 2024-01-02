@@ -35,17 +35,20 @@ Documentation blocks should be used in the following places:
 
 ```lua
 --- Determines if this vector is contained within the region defined by the given vectors.
+-- A longer description goes here.
 -- @param	a		Vector3		The target vector to check.
 -- @param	pos1	Vector3		pos1 of the defined region.
+-- More description text for pos1
 -- @param	pos2	Vector3		pos2 of the defined region.
 -- @return	boolean	Whether the given target is contained within the defined worldedit region.
+-- This is the second line of the description for @return.
 function Vector3.is_contained(target, pos1, pos2)
 	-- Function code here
 end
 ```
 
 > [!IMPORTANT]
-> Documentation blocks defining a function **must be directly before a function**.
+> Documentation blocks defining a function **must be directly before a function**, with no intermediate or black lines in between.
 
 **At the top of each file with [`@namespace`](#namespace) or [`@class`](#class):**
 
@@ -102,11 +105,69 @@ Describes an argument to a function. Values are whitespace separated, in the fol
 Describes the return value(s) of a function. Values are whitespace separated, in the following format:
 
 ```lua
-<data_type>	<description>
+-- @returns	<data_type>	<description>
 ```
 
 - **`<data_type>`:** The data type of the item being returned. If multiple items are returned, separate them with commas.
 - **`<description>`:** A description of the return value.
+
+### `@namespace`
+Specifies the namespace of the rest of the file. Any description lines will be used as a description for the namespace defined. It takes the following form:
+
+```lua
+-- @namespace <namespace>
+```
+
+- **`<namespace>`:** The namespace, separated by dots. For example, `foo.bar` or `worldeditadditions.noise.engines`.
+
+### `@class`
+Identical to [`@namespace`](#namespace), but defines a 'class' instead (the author is aware that Lua only has metatables and not proper classes). This is a cosmetic change in the icon used to identify the namespace in the documentation.
+
+### `@module`
+Identical to [`@namespace`](#namespace) in that it sets the namespace of a file, but **does not add to the generated documentation**. Can be useful if e.g. you have a main `@namespace` definition in one file for a given namespace, but then a some other satellite files that also need to be part of that namespace but you don't want to add a description that will appear in the generated documentation.
+
+> [!IMPORTANT]
+> *All* namespaces **MUST** have at least one `@namespace` definition *somewhere* in the codebase.
+
+### `@internal`
+Specifies that a function is internal and hence subject to change. Displays an icon next to the function to indicate this.
+
+TODO Implement displaying an icon as described.
+
+### `@event`
+Indicates the current documentation block is documenting an event.
+
+The author is aware that Lua does not have a native eventing system. It is expected that authors will implement / have implemented their own eventing system.
+
+This directive takes a single value:
+
+```lua
+-- @event <event_name>
+```
+
+- **`<event_name>`:** The name of the event being documented.
+
+Optionally [`@format`](#format) can be used to describe the format of any argument passed to callback functions.
+
+### `@format`
+Describes the format of argument(s) passed to callback functions when an [event](#event) is called. It has the following format:
+
+```lua
+-- @format <value_description>
+```
+
+- **`<value_description>`:** A description of the format of the argument. It is recommended but not required that a single object is always passed to event callback functions, and the format thereof documented here in the format `{ parameter: type, .... }`, where `parameter` is the name of each field, and `type` is the type of the value associated therewith (e.g. `string`, `boolean`, `SomeClass`, etc).
+
+### `@value`
+**This directive is currently not fully implemented.**
+
+Indicates that a single value is being documented rather than a function, class, or event. Takes a single value:
+
+```lua
+-- @value <type>
+```
+
+- **`<type>`:** Describes the type of the value being documented - for example `number`, `FooClass`, etc.
 
 ## System Requirements
 - Node.js
