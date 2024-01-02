@@ -1,4 +1,5 @@
 # moondoc
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/sbrl/moondoc?color=green&label=latest%20release)  [![View the changelog](https://img.shields.io/badge/%F0%9F%93%B0-Changelog-informational)](https://github.com/sbrl/moondoc/blob/main/CHANGELOG.md)
 
 > Lua API documentation generator
 
@@ -9,6 +10,7 @@ This tool was originally written to assist with documenting [WorldEditAdditions]
 See also [LDoc](https://github.com/lunarmodules/ldoc).
 
 Yes, I know this tool is written in Javascript and not Lua, but Lua doesn't come with batteries included so writing a Lua documentation generator in Lua would have been a *painful* process....
+
 
 ## Documentation blocks
 Moondoc functions on documentation blocks in a similar format to that of JSDoc. Here's an example block:
