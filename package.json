@@ -41,5 +41,13 @@
 	"devDependencies": {
 		"@nozbe/microfuzz": "^1.0.0",
 		"esbuild": "^0.19.11"
-	}
+	},
+	"files": [
+		"src/*.mjs",
+		"src/lib/*.mjs",
+		"src/lib/*/*.mjs",
+		"src/subcommands/*/*.mjs",
+		"src/templates/_dist/*.js",
+		"src/templates/*.*"
+	]
 }
