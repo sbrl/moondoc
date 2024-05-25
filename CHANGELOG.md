@@ -18,6 +18,10 @@ VERSION CHANGELOG HERE
 -------
 
 
+## v1.1.1 (unreleased)
+- CSS: Don't show `hr.big-divider` when element before it is `.gone`
+
+
 ## v1.1
 - Add `--branch` CLI argument to main `build` subcommand
 
