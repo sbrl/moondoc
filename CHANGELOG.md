@@ -19,6 +19,7 @@ VERSION CHANGELOG HERE
 
 
 ## v1.1.1 (unreleased)
+- CLI: Add `--name` argument to set the project name via CLI
 - CSS: Don't show `hr.big-divider` when element before it is `.gone`
 
 

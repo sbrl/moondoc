@@ -22,7 +22,8 @@ export default async function() {
 			html_minify: !settings.cli.debug_nominify
 		},
 		settings.cli.software,
-		settings.cli.branch
+		settings.cli.branch,
+		settings.cli.name
 	));
 	await end_safe(stream_out);
 	
