@@ -19,9 +19,9 @@ VERSION CHANGELOG HERE
 
 
 ## v1.1.1 (unreleased)
+- DOCS: Add initial `@example` support
 - CLI: Add `--name` argument to set the project name via CLI
 - CSS: Don't show `hr.big-divider` when element before it is `.gone`
-
 
 ## v1.1
 - Add `--branch` CLI argument to main `build` subcommand

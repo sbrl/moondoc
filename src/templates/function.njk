@@ -13,6 +13,7 @@
 		{% markdown %}{{ function.description }}{% endmarkdown %}
 	</div>
 	
+	<div class="docs-arguments">
 	<h4>Arguments</h4>
 	<table>
 		<tr>
@@ -37,7 +38,9 @@
 		</tr>
 		{% endfor %}
 	</table>
+	</div>
 	
+	<div class="docs-returns">
 	<h4>Returns</h4>
 	<p>{% if function.returns %}
 		<code>{{ function.returns.type}}</code>
@@ -45,8 +48,22 @@
 	{% else %}
 		<code class="unknown">nil</code>
 	{% endif %}</p>
+	</div>
 	
-	<details>
+	{% if function.examples|length %}
+	<div class="docs-examples">
+	<h4>Examples</h4>
+	{% for example in function.examples %}
+	<div class="example">
+		<h5>{{ example.description }}</h5>
+		<pre><code>{{ example.example }}</code></pre>
+	</div>
+	{% endfor %}
+	
+	</div>
+	{% endif %}
+	
+	<details class="debug-source">
 		<summary>Source</summary>
 		<pre><code>{{function.text}}</code></pre>
 		<pre><code>{{function|dump("\t")}}</code></pre>

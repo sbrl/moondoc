@@ -19,6 +19,20 @@
 		{% endif %}
 	{% endfor %}
 	
+	
+	{% if event.examples|length %}
+	<div class="docs-examples">
+	<h4>Examples</h4>
+	{% for example in event.examples %}
+	<div class="example">
+		<h5>{{ example.description }}</h5>
+		<pre><code>{{ example.example }}</code></pre>
+	</div>
+	{% endfor %}
+	</div>
+	{% endif %}
+	
+	
 	<details>
 		<summary>Source</summary>
 		<pre><code>{{event.text}}</code></pre>

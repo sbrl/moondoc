@@ -23,6 +23,19 @@
 	<div class="namespace-description">
 		{% markdown %}{{ namespace.def.description }}{% endmarkdown %}
 	</div>
+	
+	{% if namespace.examples|length %}
+	<div class="docs-examples">
+	<h4>Examples</h4>
+	{% for example in namespace.examples %}
+	<div class="example">
+		<h5>{{ example.description }}</h5>
+		<pre><code>{{ example.example }}</code></pre>
+	</div>
+	{% endfor %}
+	</div>
+	{% endif %}
+	
 
 	{% if namespace.children|length %} {# > 0 #}
 	<div class="namespaces">
