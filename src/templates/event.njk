@@ -26,7 +26,7 @@
 	{% for example in event.examples %}
 	<div class="example">
 		<h5>{{ example.description }}</h5>
-		<pre><code>{{ example.example }}</code></pre>
+		{{ example.example_highlighted|safe }}
 	</div>
 	{% endfor %}
 	</div>
