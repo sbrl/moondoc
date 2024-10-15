@@ -115,7 +115,7 @@ export default async function(dirpath, software=null, branch="__AUTO__") {
 		
 		const source = await fs.promises.readFile(filepath, "utf-8");
 		
-		result[relative] = parse_file(source);
+		result[relative] = await parse_file(source);
 		
 		to_display.push({filepath: relative, blocks: result[relative].blocks.length});
 	}

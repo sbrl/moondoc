@@ -19,7 +19,7 @@ VERSION CHANGELOG HERE
 
 
 ## v1.1.1 (unreleased)
-- DOCS: Add initial `@example` support
+- Add initial `@example` support with syntax highlighting by [`shiki`](https://shiki.style/)
 - CLI: Add `--name` argument to set the project name via CLI
 - CSS: Don't show `hr.big-divider` when element before it is `.gone`
 
