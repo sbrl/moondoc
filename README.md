@@ -131,6 +131,23 @@ Identical to [`@namespace`](#namespace) in that it sets the namespace of a file,
 > [!IMPORTANT]
 > *All* namespaces **MUST** have at least one `@namespace` definition *somewhere* in the codebase.
 
+### `@example`
+Used in a function, [`@namespace`](#namespace), or [`@event`](#event) and describes an example. Optionally the first line inline with `@example` can be the title for the example in question.
+
+An `@example` with no description / title:
+
+```lua
+-- @example
+-- local result = some_function(foo, 4)
+```
+
+The same `@example` with a description:
+
+```lua
+-- @example A simple example
+-- local result = some_function(foo, 4)
+```
+
 ### `@internal`
 Specifies that a function is internal and hence subject to change. Displays an a icon (🔑) next to the function to indicate this.
 
