@@ -191,9 +191,17 @@ Indicates that a single value is being documented rather than a function, class,
 
 ## Getting started
 
-
-
 TODO Fill this out.
+
+
+## Contributing
+Contributions are welcome! Please state in any pull request(s) that you release your contribution under the _Mozilla Public License 2.0_.
+
+
+## License
+This mod is licensed under the _Mozilla Public License 2.0_, a copy of which (along with a helpful summary as to what you can and can't do with it in the GH web interface at least) can be found in the `LICENSE` file in this repository.
+
+If moondoc has helped you out in a project, I'd love to know! Please consider letting me know by opening an issue :-)
 
 
 TODO DO NOT FORGET TO RUN ESBUILD **BEFORE** MAKING A RELEASE
