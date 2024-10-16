@@ -18,7 +18,7 @@ VERSION CHANGELOG HERE
 -------
 
 
-## v1.2 (unreleased)
+## v1.2
 - Add initial `@example` support with syntax highlighting by [`shiki`](https://shiki.style/)
 - Display notice *This function takes no arguments* for functions that take no args
 - CLI: Add `--name` argument to set the project name via CLI
