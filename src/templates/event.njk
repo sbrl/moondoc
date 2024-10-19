@@ -15,7 +15,8 @@
 	{% for directive in event.directives %}
 		{% if directive.directive == "format" %}
 		<h4>Format</h4>
-		<pre><code>{{ directive.text }}</code></pre>
+		{# <pre><code>{{ directive.text }}</code></pre> #}
+		{{ directive.text_highlighted|safe }}
 		{% endif %}
 	{% endfor %}
 	
@@ -35,8 +36,8 @@
 	
 	<details>
 		<summary>Source</summary>
-		<pre><code>{{event.text}}</code></pre>
-		<pre><code>{{event|dump("\t")}}</code></pre>
+		<pre><code>{{event.text_highlighted|safe}}</code></pre>
+		<pre><code>{{event.__self|safe}}</code></pre>
 	</details>
 	
 </section>

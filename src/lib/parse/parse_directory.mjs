@@ -5,6 +5,7 @@ import path from 'path';
 
 import { glob } from 'glob';
 import as_table from 'as-table';
+import { codeToHtml } from 'shiki';
 
 import log from '../io/NamespacedLog.mjs'; const l = log("parse_dir");
 
@@ -94,6 +95,11 @@ async function group_by_namespace(definitions, dirpath_repo, software=null, bran
 				default:
 					throw new Error(`Error: Unknown block type '${block.type}'.`);
 			}
+			
+			block.__self = await codeToHtml(JSON.stringify(block, null, `\t`), {
+				lang: `json`,
+				theme: `vitesse-dark`
+			});
 		}
 	}
 	

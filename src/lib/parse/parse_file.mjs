@@ -57,7 +57,7 @@ function parse_function(line) {
 	return result;
 }
 
-function find_block_comment(lines, i) {
+async function find_block_comment(lines, i) {
 	const match = lines[i].match(/^\s*-{3,}\s*(.*)$/);
 	if(match === null) return null;
 	const result = {
@@ -114,6 +114,13 @@ function find_block_comment(lines, i) {
 						result.type = "event";
 						result.event = comment_line.text;
 						break;
+					case "format":
+						directive_new.text_highlighted = await codeToHtml(
+							directive_new.text, {
+							lang: `lua`,
+							theme: `vitesse-dark`
+						}); 
+						break;
 					case "module":
 						mode = "module-def";
 						result.type = "module-def";
@@ -155,6 +162,10 @@ function find_block_comment(lines, i) {
 		result.line,
 		result.line_last + (result.type == "event" ? 0 : 1)
 	);
+	result.text_highlighted = await codeToHtml(result.text.join(`\n`), {
+		lang: `lua`,
+		theme: `vitesse-dark`
+	});
 	if(result.text.length === 0) {
 		console.error(`DEBUG:parse_block ERROR NO_TEXT result`, result);
 		console.error(`DEBUG:parse_block lines`, lines.length, lines);
@@ -241,7 +252,7 @@ async function parse_file(source) {
 		i++;
 		if(i < skip_until) continue;
 		
-		const comment = find_block_comment(lines, i);
+		const comment = await find_block_comment(lines, i);
 		if(comment === null) continue;
 		
 		if(comment.directives.length === 0) {

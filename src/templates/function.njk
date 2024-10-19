@@ -69,8 +69,8 @@
 	
 	<details class="debug-source">
 		<summary>Source</summary>
-		<pre><code>{{function.text}}</code></pre>
-		<pre><code>{{function|dump("\t")}}</code></pre>
+		{{ function.text_highlighted|safe }}
+		{{ function.__self|safe }}
 	</details>
 	
 </section>

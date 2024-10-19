@@ -18,6 +18,10 @@ VERSION CHANGELOG HERE
 -------
 
 
+## v1.3 (unreleased)
+- Make moar code blocks syntax highlighted
+
+
 ## v1.2
 - Add initial `@example` support with syntax highlighting by [`shiki`](https://shiki.style/)
 - Display notice *This function takes no arguments* for functions that take no args

@@ -84,9 +84,11 @@ nav > ul {
 	padding: 0;
 }
 
+pre	{ padding: 0.5em;	}
 pre, code {
 	font-family: "Ubuntu Mono", monospace;
 	font-size: 1rem;
+	white-space: pre-wrap;
 }
 
 a {
